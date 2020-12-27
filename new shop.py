@@ -1,0 +1,43 @@
+import time
+from selenium import webdriver
+driver = webdriver.Chrome()
+driver.maximize_window()
+driver.get("http://practice.automationtesting.in/")
+shop=driver.find_element_by_id("menu-item-40")
+shop.click()
+driver.execute_script("window.scrollBy(0, 300);")
+Book1 = driver.find_element_by_xpath("//a[@href='/shop/?add-to-cart=181']")
+Book1.click()
+time.sleep(3)
+driver.execute_script("window.scrollBy(0, 500);")
+Book2 = driver.find_element_by_xpath("//a[@href='/shop/?add-to-cart=165']")
+Book2.click()
+Basket = driver.find_element_by_xpath("//a[@href='http://practice.automationtesting.in/basket/']")
+Basket.click()
+time.sleep(3)
+Delete_1_book = driver.find_element_by_xpath("//a[@data-product_id='181']")
+Delete_1_book.click()
+time.sleep(3)
+Undo = driver.find_element_by_css_selector(".woocommerce-message > a")
+Undo.click()
+time.sleep(3)
+quantity=driver.find_element_by_xpath("//input[@name='cart[9766527f2b5d3e95d4a733fcfb77bd7e][qty]']")
+quantity.clear()
+quantity = driver.find_element_by_xpath("//input[@name='cart[9766527f2b5d3e95d4a733fcfb77bd7e][qty]']")
+quantity.send_keys("3")
+time.sleep(3)
+update=driver.find_element_by_xpath("//input[@name='update_cart']")
+update.click()
+time.sleep(3)
+# quantity=driver.find_element_by_xpath("//input[@name='cart[9766527f2b5d3e95d4a733fcfb77bd7e][qty]']")
+# quantity_get_text = quantity.text
+# assert "3" in quantity_get_text
+# time.sleep(3)
+apply=driver.find_element_by_xpath("//input[@name='apply_coupon']")
+apply.click()
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+error = WebDriverWait(driver, 10).until(EC.text_to_be_present_in_element((By.CLASS_NAME,"woocommerce-error"), "Please enter a coupon code"))
+print(error)
+driver.quit()
